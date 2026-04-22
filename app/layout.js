@@ -39,7 +39,9 @@ export const metadata = {
   },
   manifest: "/site.webmanifest",
   verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    google:
+      process.env.GOOGLE_SITE_VERIFICATION ||
+      "w2p3iOVwL1OSqSOyXU9FPc9JBUjI9ZNXf_AUE5Zkslc",
     other: {
       "msvalidate.01": process.env.BING_SITE_VERIFICATION || undefined,
     },
