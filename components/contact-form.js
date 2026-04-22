@@ -127,9 +127,6 @@ export function ContactForm() {
           <button className="button button-solid" disabled={isSubmitting} type="submit">
             {isSubmitting ? "Sending..." : "Send enquiry"}
           </button>
-          <span className="field-note">
-            Enquiries are delivered to <code>tech.cofndr@gmail.com</code> when the mail service is configured.
-          </span>
         </div>
       </form>
     </section>
