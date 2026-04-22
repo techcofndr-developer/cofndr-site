@@ -1,8 +1,10 @@
-export default function sitemap() {
-  const base = "https://cofndr.com";
+import { seoRoutes, siteConfig } from "../lib/seo";
 
-  return ["", "/about", "/services", "/work", "/contact"].map((path) => ({
-    url: `${base}${path}`,
+export default function sitemap() {
+  return seoRoutes.map((route) => ({
+    url: `${siteConfig.url}${route.path}`,
     lastModified: new Date(),
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
   }));
 }

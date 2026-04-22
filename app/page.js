@@ -1,16 +1,34 @@
 import Link from "next/link";
+import { StructuredData } from "../components/structured-data";
 import {
   capabilities,
   faqs,
   metrics,
   process,
+  serviceLinks,
   showcase,
   testimonials,
 } from "../lib/site-data";
+import { buildMetadata, faqSchema } from "../lib/seo";
+
+export const metadata = buildMetadata({
+  path: "/",
+  title: "CoFndr | Website Development, SEO, and Technical Support",
+  description:
+    "Website development, SEO services, performance optimization, and technical support for businesses that want a stronger online presence.",
+  keywords: [
+    "website development company",
+    "seo services",
+    "technical seo",
+    "performance optimization",
+    "website maintenance",
+  ],
+});
 
 export default function HomePage() {
   return (
     <div className="page-stack">
+      <StructuredData data={faqSchema(faqs)} />
       <section className="hero-section">
         <div className="hero-copy">
           <p className="eyebrow">Technical services for modern businesses</p>
@@ -78,6 +96,24 @@ export default function HomePage() {
               <span className="card-index">{String(index + 1).padStart(2, "0")}</span>
               <h3>{item.title}</h3>
               <p>{item.copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-grid">
+        <div className="section-heading">
+          <p className="eyebrow">Service Pages</p>
+          <h2>Clear landing pages for the service terms people actually search for.</h2>
+        </div>
+        <div className="card-grid two-up">
+          {serviceLinks.map((item) => (
+            <article className="feature-card" key={item.href}>
+              <h3>{item.title}</h3>
+              <p>{item.copy}</p>
+              <Link className="button button-ghost" href={item.href}>
+                View service page
+              </Link>
             </article>
           ))}
         </div>

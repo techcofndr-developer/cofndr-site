@@ -1,13 +1,24 @@
 import { values } from "../../lib/site-data";
+import { StructuredData } from "../../components/structured-data";
+import { breadcrumbSchema, buildMetadata } from "../../lib/seo";
 
-export const metadata = {
-  title: "About",
-  description: "About CoFndr and the principles behind the company website.",
-};
+export const metadata = buildMetadata({
+  path: "/about",
+  title: "About CoFndr",
+  description:
+    "Learn about CoFndr and the execution-focused approach behind its website development, SEO, and technical support services.",
+  keywords: ["about CoFndr", "website development company", "seo and technical support"],
+});
 
 export default function AboutPage() {
   return (
     <div className="page-stack inner-page">
+      <StructuredData
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ])}
+      />
       <section className="page-hero">
         <p className="eyebrow">About</p>
         <h1>CoFndr is built around clarity, restraint, and execution quality.</h1>

@@ -1,13 +1,29 @@
 import { ContactForm } from "../../components/contact-form";
+import { StructuredData } from "../../components/structured-data";
+import { breadcrumbSchema, buildMetadata } from "../../lib/seo";
 
-export const metadata = {
+export const metadata = buildMetadata({
+  path: "/contact",
   title: "Contact",
-  description: "Contact CoFndr to discuss website development, SEO, performance, and technical service needs.",
-};
+  description:
+    "Contact CoFndr to discuss website development, SEO services, performance optimization, and ongoing technical support.",
+  keywords: [
+    "contact website developer",
+    "contact seo agency",
+    "website development enquiry",
+    "seo consultation",
+  ],
+});
 
 export default function ContactPage() {
   return (
     <div className="page-stack inner-page">
+      <StructuredData
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ])}
+      />
       <section className="contact-layout">
         <div className="page-hero compact-hero">
           <p className="eyebrow">Contact</p>

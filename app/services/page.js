@@ -1,14 +1,30 @@
 import Link from "next/link";
-import { serviceDetails } from "../../lib/site-data";
+import { StructuredData } from "../../components/structured-data";
+import { serviceDetails, serviceLinks } from "../../lib/site-data";
+import { breadcrumbSchema, buildMetadata } from "../../lib/seo";
 
-export const metadata = {
+export const metadata = buildMetadata({
+  path: "/services",
   title: "Services",
-  description: "Services offered by CoFndr across website development, SEO, performance, and technical execution.",
-};
+  description:
+    "Browse CoFndr services across website development, SEO, Core Web Vitals optimization, and ongoing website maintenance.",
+  keywords: [
+    "website development services",
+    "seo services",
+    "core web vitals optimization",
+    "website maintenance services",
+  ],
+});
 
 export default function ServicesPage() {
   return (
     <div className="page-stack inner-page">
+      <StructuredData
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Services", path: "/services" },
+        ])}
+      />
       <section className="page-hero">
         <p className="eyebrow">Services</p>
         <h1>Technical services designed to help businesses grow online.</h1>
@@ -30,6 +46,18 @@ export default function ServicesPage() {
                 <li key={point}>{point}</li>
               ))}
             </ul>
+          </article>
+        ))}
+      </section>
+
+      <section className="card-grid two-up">
+        {serviceLinks.map((service) => (
+          <article className="feature-card" key={service.href}>
+            <h2>{service.title}</h2>
+            <p>{service.copy}</p>
+            <Link className="button button-ghost" href={service.href}>
+              Open service page
+            </Link>
           </article>
         ))}
       </section>

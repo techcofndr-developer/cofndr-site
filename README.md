@@ -21,8 +21,17 @@ Open `http://localhost:3000`.
 Copy `.env.example` to `.env.local` and set values as needed:
 
 - `CONTACT_EMAIL`: destination email shown in the UI
+- `CONTACT_FROM_NAME`: sender name used for Resend delivery
+- `CONTACT_FROM_EMAIL`: verified sender email used for Resend delivery
 - `FORM_FORWARD_URL`: optional webhook endpoint to forward submissions
 - `RESEND_API_KEY`: optional Resend API key for transactional email delivery
+
+If you use Resend, keep `CONTACT_EMAIL=tech.cofndr@gmail.com` and set:
+
+- `RESEND_API_KEY=re_...`
+- `CONTACT_FROM_EMAIL` to a sender/domain verified inside your Resend account
+
+The default `onboarding@resend.dev` sender is suitable for initial testing. For production, replace it with your own verified domain sender.
 
 If neither `FORM_FORWARD_URL` nor `RESEND_API_KEY` is set, contact submissions are stored locally in `.data/contact-submissions.jsonl`. That fallback is useful for local development or self-hosted Node deployments, but not for serverless persistence.
 

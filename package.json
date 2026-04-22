@@ -2,10 +2,14 @@
   "name": "cofndr-site",
   "private": true,
   "scripts": {
+    "prebuild": "node scripts/generate-indexnow-key.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seo:audit": "node scripts/seo-audit.mjs",
+    "seo:indexnow": "node scripts/ping-indexnow.mjs",
+    "seo:deploy": "npm run seo:audit && npm run seo:indexnow"
   },
   "dependencies": {
     "next": "^15.5.15",

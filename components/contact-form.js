@@ -128,7 +128,7 @@ export function ContactForm() {
             {isSubmitting ? "Sending..." : "Send enquiry"}
           </button>
           <span className="field-note">
-            Form submissions are configured to go to <code>tech.cofndr@gmail.com</code>.
+            Enquiries are delivered to <code>tech.cofndr@gmail.com</code> when the mail service is configured.
           </span>
         </div>
       </form>

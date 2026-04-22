@@ -3,6 +3,8 @@ import path from "node:path";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const defaultContactEmail = "tech.cofndr@gmail.com";
+const defaultFromName = "CoFndr Website";
+const defaultFromEmail = "onboarding@resend.dev";
 
 function validate(body) {
   const issues = [];
@@ -29,10 +31,25 @@ function validate(body) {
 async function sendViaResend(payload) {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_EMAIL || defaultContactEmail;
+  const fromName = process.env.CONTACT_FROM_NAME || defaultFromName;
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || defaultFromEmail;
 
   if (!apiKey || !to) {
     return false;
   }
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;color:#16181d;line-height:1.6">
+      <h2 style="margin:0 0 16px">New CoFndr enquiry</h2>
+      <p style="margin:0 0 10px"><strong>Name:</strong> ${payload.name}</p>
+      <p style="margin:0 0 10px"><strong>Email:</strong> ${payload.email}</p>
+      <p style="margin:0 0 10px"><strong>Company:</strong> ${payload.company}</p>
+      <p style="margin:0 0 10px"><strong>Service:</strong> ${payload.service}</p>
+      <p style="margin:0 0 10px"><strong>Submitted:</strong> ${payload.createdAt}</p>
+      <hr style="margin:18px 0;border:none;border-top:1px solid #d8d8d8" />
+      <p style="margin:0;white-space:pre-wrap">${payload.message}</p>
+    </div>
+  `;
 
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -41,15 +58,17 @@ async function sendViaResend(payload) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "CoFndr Website <onboarding@resend.dev>",
+      from: `${fromName} <${fromEmail}>`,
       to,
       subject: `New CoFndr enquiry from ${payload.name}`,
       reply_to: payload.email,
+      html,
       text: [
         `Name: ${payload.name}`,
         `Email: ${payload.email}`,
         `Company: ${payload.company}`,
         `Service: ${payload.service}`,
+        `Submitted: ${payload.createdAt}`,
         "",
         payload.message,
       ].join("\n"),
@@ -57,7 +76,8 @@ async function sendViaResend(payload) {
   });
 
   if (!response.ok) {
-    throw new Error("Resend delivery failed.");
+    const errorBody = await response.text();
+    throw new Error(`Resend delivery failed: ${errorBody}`);
   }
 
   return true;
@@ -111,8 +131,14 @@ export async function POST(request) {
     }
 
     const delivered =
-      (await sendViaResend(payload).catch(() => false)) ||
-      (await sendViaWebhook(payload).catch(() => false));
+      (await sendViaResend(payload).catch((error) => {
+        console.error(error);
+        return false;
+      })) ||
+      (await sendViaWebhook(payload).catch((error) => {
+        console.error(error);
+        return false;
+      }));
 
     if (!delivered) {
       await saveLocally(payload);

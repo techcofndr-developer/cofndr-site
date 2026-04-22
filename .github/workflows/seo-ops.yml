@@ -1,0 +1,36 @@
+name: SEO Ops
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  seo-audit-and-indexnow:
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ secrets.SITE_URL }}
+      SEO_AUDIT_BASE_URL: ${{ secrets.SITE_URL }}
+      NEXT_PUBLIC_SITE_URL: ${{ secrets.SITE_URL }}
+      INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate IndexNow key file
+        run: node scripts/generate-indexnow-key.mjs
+
+      - name: Run SEO audit
+        run: node scripts/seo-audit.mjs
+
+      - name: Notify IndexNow
+        run: node scripts/ping-indexnow.mjs
