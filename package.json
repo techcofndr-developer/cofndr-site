@@ -2,18 +2,26 @@
   "name": "cofndr-site",
   "private": true,
   "scripts": {
+    "build": "next build",
     "prebuild": "node scripts/generate-indexnow-key.mjs",
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "seo:audit": "node scripts/seo-audit.mjs",
     "seo:indexnow": "node scripts/ping-indexnow.mjs",
-    "seo:deploy": "npm run seo:audit && npm run seo:indexnow"
+    "seo:deploy": "npm run seo:audit && npm run seo:indexnow",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
+    "@opennextjs/cloudflare": "^1.19.4",
     "next": "^15.5.15",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "wrangler": "^4.84.1"
   }
 }
