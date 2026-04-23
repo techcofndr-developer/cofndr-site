@@ -1,6 +1,3 @@
-import { appendFile, mkdir } from "node:fs/promises";
-import path from "node:path";
-
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const defaultContactEmail = "tech.cofndr@gmail.com";
 const defaultFromName = "CoFndr Website";
@@ -104,6 +101,10 @@ async function sendViaWebhook(payload) {
 }
 
 async function saveLocally(payload) {
+  const [{ appendFile, mkdir }, path] = await Promise.all([
+    import("node:fs/promises"),
+    import("node:path"),
+  ]);
   const dir = path.join(process.cwd(), ".data");
   const file = path.join(dir, "contact-submissions.jsonl");
   await mkdir(dir, { recursive: true });
@@ -141,14 +142,27 @@ export async function POST(request) {
       }));
 
     if (!delivered) {
-      await saveLocally(payload);
+      if (process.env.NODE_ENV !== "production") {
+        await saveLocally(payload);
+      } else {
+        return Response.json(
+          {
+            ok: false,
+            errors: [
+              "Contact form delivery is not configured on the server. Please email tech.cofndr@gmail.com.",
+            ],
+          },
+          { status: 503 }
+        );
+      }
     }
 
     return Response.json({
       ok: true,
       message: "Thanks. Your enquiry has been submitted.",
     });
-  } catch {
+  } catch (error) {
+    console.error(error);
     return Response.json(
       { ok: false, errors: ["Something went wrong while sending the form."] },
       { status: 500 }

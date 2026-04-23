@@ -6,7 +6,7 @@ const initialState = {
   name: "",
   email: "",
   company: "",
-  service: "Company Website",
+  service: "Website Development",
   message: "",
 };
 
@@ -89,10 +89,10 @@ export function ContactForm() {
             <label htmlFor="service">Service</label>
             <div className="select-wrap">
               <select id="service" name="service" value={form.service} onChange={updateField}>
-                <option>Company Website</option>
-                <option>Brand Refresh</option>
-                <option>Product Marketing Site</option>
-                <option>Design System</option>
+                <option>Website Development</option>
+                <option>SEO Services</option>
+                <option>Performance Optimization</option>
+                <option>Website Maintenance</option>
                 <option>General enquiry</option>
               </select>
             </div>

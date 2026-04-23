@@ -18,32 +18,30 @@ export function SiteHeader() {
 
   return (
     <header className="site-header">
-      <Link className="brand" href="/" onClick={() => setOpen(false)}>
+      <div className="header-row">
+        <Link className="brand" href="/" onClick={() => setOpen(false)} aria-label="CoFndr home">
         <span className="brand-mark-frame" aria-hidden="true">
           <span className="brand-wordmark">
             <span className="brand-wordmark-co">Co</span>
             <span className="brand-wordmark-fndr">Fndr</span>
           </span>
         </span>
-        <span className="brand-meta">
-          <strong>CoFndr</strong>
-          <span>Minimal systems. Serious presence.</span>
-        </span>
-      </Link>
+        </Link>
 
-      <button
-        className="mobile-toggle"
-        type="button"
-        onClick={() => setOpen((current) => !current)}
-        aria-expanded={open}
-        aria-label="Toggle navigation"
-      >
-        <span className={`mobile-toggle-icon ${open ? "open" : ""}`} aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </span>
-      </button>
+        <button
+          className="mobile-toggle"
+          type="button"
+          onClick={() => setOpen((current) => !current)}
+          aria-expanded={open}
+          aria-label="Toggle navigation"
+        >
+          <span className={`mobile-toggle-icon ${open ? "open" : ""}`} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+      </div>
 
       <nav className={`nav-links ${open ? "open" : ""}`} aria-label="Primary">
         {links.map((link) => (

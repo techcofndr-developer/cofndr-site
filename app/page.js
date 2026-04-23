@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { StructuredData } from "../components/structured-data";
 import {
-  capabilities,
   faqs,
   metrics,
   process,
@@ -62,15 +61,12 @@ export default function HomePage() {
             </div>
             <div className="signal-card signal-card-top">
               <strong>Web Development</strong>
-              <span>Modern websites built for credibility, speed, and conversion.</span>
             </div>
             <div className="signal-card signal-card-left">
               <strong>SEO</strong>
-              <span>Technical and on-page improvements that help you get found.</span>
             </div>
             <div className="signal-card signal-card-bottom">
               <strong>Execution</strong>
-              <span>From design to launch, the work is built to perform in production.</span>
             </div>
           </div>
         </aside>
@@ -83,22 +79,6 @@ export default function HomePage() {
             <span>{metric.label}</span>
           </article>
         ))}
-      </section>
-
-      <section className="section-grid">
-        <div className="section-heading">
-          <p className="eyebrow">Capabilities</p>
-          <h2>Technical services that improve visibility, trust, and conversion.</h2>
-        </div>
-        <div className="card-grid three-up">
-          {capabilities.map((item, index) => (
-            <article className="feature-card" key={item.title}>
-              <span className="card-index">{String(index + 1).padStart(2, "0")}</span>
-              <h3>{item.title}</h3>
-              <p>{item.copy}</p>
-            </article>
-          ))}
-        </div>
       </section>
 
       <section className="section-grid">

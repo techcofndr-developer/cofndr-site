@@ -103,10 +103,23 @@ textarea {
   position: sticky;
   top: 14px;
   z-index: 40;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 32px;
   border-color: rgba(255, 255, 255, 0.28);
   box-shadow:
     0 24px 56px rgba(0, 0, 0, 0.18),
     inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: auto;
 }
 
 .site-footer {
@@ -118,7 +131,7 @@ textarea {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 0;
 }
 
 .brand-mark-frame {
@@ -136,16 +149,6 @@ textarea {
     0 8px 18px rgba(0, 0, 0, 0.08);
 }
 
-.brand-meta {
-  display: grid;
-  gap: 2px;
-}
-
-.brand-meta strong {
-  font-size: 0.96rem;
-  color: #17181c;
-}
-
 .brand-meta span,
 .eyebrow,
 .support-copy,
@@ -158,10 +161,6 @@ textarea {
 .field-note,
 .site-footer span {
   color: var(--muted);
-}
-
-.brand-meta span {
-  color: #68625b;
 }
 
 .brand-wordmark {
@@ -308,11 +307,13 @@ textarea {
 }
 
 .nav-links {
+  justify-self: end;
   padding: 6px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(23, 24, 28, 0.08);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
 }
 
 .nav-links a,
@@ -585,8 +586,11 @@ h3 {
 
 .signal-card {
   position: absolute;
-  width: 160px;
-  padding: 14px 16px;
+  width: 156px;
+  min-height: 96px;
+  padding: 16px;
+  display: grid;
+  align-items: center;
   border-radius: 18px;
   background: rgba(12, 14, 18, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -594,13 +598,9 @@ h3 {
 
 .signal-card strong {
   display: block;
-  margin-bottom: 6px;
-}
-
-.signal-card span {
-  color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.5;
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.25;
 }
 
 .signal-card-top {
@@ -966,8 +966,10 @@ h3 {
   }
 
   .site-header {
-    align-items: flex-start;
-    flex-wrap: wrap;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    padding: 12px 14px;
   }
 
   .brand-mark-frame {
@@ -976,8 +978,8 @@ h3 {
     padding: 0 14px;
   }
 
-  .brand-wordmark {
-    font-size: 1.82rem;
+  .header-row {
+    gap: 12px;
   }
 
   .field-row {
@@ -999,6 +1001,10 @@ h3 {
   .site-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .site-header {
+    gap: 12px;
   }
 
   .footer-summary {
@@ -1037,10 +1043,6 @@ h3 {
     width: 100%;
   }
 
-  .brand {
-    gap: 12px;
-  }
-
   .brand-wordmark {
     font-size: 1.7rem;
   }
@@ -1055,6 +1057,7 @@ h3 {
 
   .signal-card {
     width: 134px;
+    min-height: 88px;
     padding: 12px 14px;
   }
 
